@@ -1,4 +1,5 @@
 package ru.ssau.tk.sizar.ooplabs.Task4;
+
 import ru.ssau.tk.sizar.ooplabs.Task4.myfirstpackage.MySecondClass;
 
 class MyFirstClass {
