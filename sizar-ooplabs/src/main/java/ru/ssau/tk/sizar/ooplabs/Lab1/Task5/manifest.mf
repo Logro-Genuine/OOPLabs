@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: Chebykina
+Main-Class: ru.ssau.tk.sizar.ooplab1.Task4.ru.ssau.tk.sizar.ooplabs.Lab1.Task1.ru.ssau.tk.sizar.ooplabs.Lab1.Task2.ru.ssau.tk.sizar.ooplabs.Lab1.Task3.ru.ssau.tk.sizar.ooplabs.Lab1.Task4.MyFirstClass
+

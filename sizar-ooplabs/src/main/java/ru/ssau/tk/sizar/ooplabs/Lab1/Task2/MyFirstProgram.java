@@ -1,4 +1,4 @@
-package ru.ssau.tk.sizar.ooplabs.Task2;
+package ru.ssau.tk.sizar.ooplabs.Lab1.Task2;
 
 class MyFirstClass {
     public static void main(String[] s) {

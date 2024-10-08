@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Created-By: Chebykina
-Main-Class: ru.ssau.tk.sizar.ooplabs.Task4.MyFirstClass
-

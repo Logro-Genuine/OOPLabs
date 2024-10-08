@@ -1,4 +1,4 @@
-package ru.ssau.tk.sizar.ooplabs.Task4.myfirstpackage;
+package ru.ssau.tk.sizar.ooplabs.Lab1.Task4.myfirstpackage;
 
 public class MySecondClass {
     private int biba;

@@ -1,6 +1,6 @@
-package ru.ssau.tk.sizar.ooplabs.Task4;
+package ru.ssau.tk.sizar.ooplabs.Lab1.Task4;
 
-import ru.ssau.tk.sizar.ooplabs.Task4.myfirstpackage.MySecondClass;
+import ru.ssau.tk.sizar.ooplabs.Lab1.Task4.myfirstpackage.MySecondClass;
 
 class MyFirstClass {
     public static void main(String[] s) {
