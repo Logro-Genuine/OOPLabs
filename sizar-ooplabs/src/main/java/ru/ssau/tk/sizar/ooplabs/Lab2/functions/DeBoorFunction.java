@@ -1,19 +1,28 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 public class DeBoorFunction implements MathFunction{
-    public double apply(int k, int degree, int i, double x, double[] knots, double[] Points){
-        if (k==0){
-            return Points[i];
-        }
-        else
-        {
-            double alpha = (x-knots[i]) / (knots[i+degree+1-k]-knots[i]);
-            return (this.apply(k-1,degree,i-1, x, knots, Points)*(1-alpha)+this.apply(k-1,degree, i, x, knots, Points)*alpha);
-        }
+    double[] nodes;
+    double[] controlPoints;
+    int index; //k
+    int splineDegree; //p
+    DeBoorFunction (double[] nodes, double[] controlPoints, int index, int splineDegree){
+        this.nodes = nodes;
+        this.controlPoints = controlPoints;
+        this.index = index;
+        this.splineDegree = splineDegree;
     }
-
     @Override
-    public double apply(double x) {
-        return 0;
+    public double apply(double x){ //x в данном случае - точка, для которой нужно вычислить B-сплайн
+        double[] d = new double[splineDegree+1];
+        double alpha = 0;
+        System.arraycopy(controlPoints, index - splineDegree, d, 0, splineDegree + 1);
+        for (int i = 1; i <= splineDegree; i++){
+            for (int j = splineDegree; j >= i; j--){
+                alpha = (x - nodes[j + index - splineDegree]) /
+                        (nodes[j + 1 + index - i] - nodes[j + index - splineDegree]);
+                d[j] = (1.0 - alpha) * d[j-1] + alpha * d[j];
+            }
+        }
+        return d[splineDegree];
     }
 }
