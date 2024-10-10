@@ -121,6 +121,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             return;
         }
         Node cur = head;
+        Node newNode = new Node(x,y);
         for (int i = 0; i < count; ++i){
             // уже есть такое значение х - меняем y
             if (cur.x == x){
@@ -129,7 +130,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
 
             if (cur.x > x){
-                Node newNode = new Node(x,y);
                 if (cur == head){
                     newNode.next = head;
                     newNode.prev = head.prev;
@@ -149,7 +149,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             cur = cur.next;
         }
         // дошли до конца - значит х больше, чем все, добавляем в конец
-        addNode(x, y);
+        newNode.prev = cur.prev;
+        newNode.next = cur;
+        cur.prev.next = newNode;
+        cur.prev = newNode;
         ++count;
 
     }
