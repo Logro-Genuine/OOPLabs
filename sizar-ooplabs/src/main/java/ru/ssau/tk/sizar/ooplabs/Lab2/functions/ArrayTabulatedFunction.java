@@ -2,7 +2,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
     double[] xValues;
     double[] yValues;
 
@@ -132,5 +132,40 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction{
             return yValues[0];
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1],yValues[floorIndex],yValues[floorIndex + 1]);
+    }
+
+    @Override
+    public void insert(double x, double y) {
+        for (int i = 0; i<count; ++i){
+            if (xValues[i] == x){
+                yValues[i] = y;
+                return;
+            }
+            if (xValues[i]>x){
+                //вставить элемент вот так Values[:i]+[x|y]+Values[i:]
+                double[] newValuesX = new double[count+1];
+                double[] newValuesY = new double[count+1];
+                System.arraycopy(xValues,0, newValuesX,0, i);
+                System.arraycopy(yValues,0, newValuesY,0, i);
+                newValuesX[i] = x;
+                newValuesY[i] = y;
+                System.arraycopy(xValues, i, newValuesX,i+1, count-i);
+                System.arraycopy(yValues, i, newValuesY,i+1, count-i);
+                xValues = newValuesX;
+                yValues = newValuesY;
+                ++count;
+                return;
+            }
+        }
+
+        double[] newValuesX = new double[count+1];
+        double[] newValuesY = new double[count+1];
+        System.arraycopy(xValues,0, newValuesX,0, count);
+        System.arraycopy(yValues,0, newValuesY,0, count);
+        newValuesX[count] = x;
+        newValuesY[count] = y;
+        xValues = newValuesX;
+        yValues = newValuesY;
+        ++count;
     }
 }

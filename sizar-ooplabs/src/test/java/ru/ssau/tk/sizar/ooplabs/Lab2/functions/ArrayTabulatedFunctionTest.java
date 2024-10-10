@@ -96,5 +96,54 @@ class ArrayTabulatedFunctionTest {
         Assertions.assertEquals(5, test.rightBound());
     }
 
+    @Test
+    void insert1() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
+        test.insert(2.5, 22222);
+        Assertions.assertEquals(22222, test.getY(3));
+    }
+    @Test
+    void insert2() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
+        test.insert(-1, 22222);
+        Assertions.assertEquals(-1, test.getX(0));
+    }
+    @Test
+    void insert3() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
+        test.insert(6, 22222);
+        Assertions.assertEquals(22222, test.getY(6));
+    }
+    @Test
+    void insert4() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
+        test.insert(5, 22222);
+        Assertions.assertEquals(22222, test.getY(5));
+    }
+    @Test
+    void insert5() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
 
+        int oldCount = test.getCount();
+
+        test.insert(2.5, 22222);
+
+        Assertions.assertEquals(oldCount+1, test.getCount());
+    }
+    @Test
+    void insert6() {
+        MathFunction func = new IdentityFunction();
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(func,0,5,6);
+
+        int oldCount = test.getCount();
+
+        test.insert(5, 22222);//x=5 существует
+
+        Assertions.assertEquals(oldCount, test.getCount());
+    }
 }
