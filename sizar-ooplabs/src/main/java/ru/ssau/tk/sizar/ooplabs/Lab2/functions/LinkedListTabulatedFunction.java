@@ -2,7 +2,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import java.util.Arrays;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable,Removable{
     protected int count;
     private Node head;
     @Override
@@ -112,6 +112,46 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             addNode(x, source.apply(x));
             x += step;
         }
+    }
+
+    @Override
+    public void insert(double x, double y) {
+        if (head == null) {
+            addNode(x, y);
+            return;
+        }
+        Node cur = head;
+        for (int i = 0; i < count; ++i){
+            // уже есть такое значение х - меняем y
+            if (cur.x == x){
+                cur.y = y;
+                return;
+            }
+
+            if (cur.x > x){
+                Node newNode = new Node(x,y);
+                if (cur == head){
+                    newNode.next = head;
+                    newNode.prev = head.prev;
+                    head.prev.next = newNode;
+                    head.prev = newNode;
+                    head = newNode;
+                }
+                else {
+                    newNode.prev = cur.prev;
+                    newNode.next = cur;
+                    cur.prev.next = newNode;
+                    cur.prev = newNode;
+                }
+                ++count;
+                return;
+            }
+            cur = cur.next;
+        }
+        // дошли до конца - значит х больше, чем все, добавляем в конец
+        addNode(x, y);
+        ++count;
+
     }
 
     @Override
