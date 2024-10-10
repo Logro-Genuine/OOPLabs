@@ -146,4 +146,15 @@ class ArrayTabulatedFunctionTest {
 
         Assertions.assertEquals(oldCount, test.getCount());
     }
+
+    @Test
+    void remove1() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {2, 4, 3, 4, -4};
+        int index = 2;
+        ArrayTabulatedFunction test = new ArrayTabulatedFunction(x, y);
+        double removed_obj = test.getX(index+1);
+        test.remove(index);
+        Assertions.assertEquals(removed_obj, test.getX(index));
+    }
 }
