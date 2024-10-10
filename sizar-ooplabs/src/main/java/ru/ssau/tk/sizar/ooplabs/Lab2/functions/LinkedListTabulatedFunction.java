@@ -2,7 +2,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import java.util.Arrays;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
     protected int count;
     private Node head;
     @Override
@@ -118,7 +118,19 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
         }
     }
 
-     static class Node {
+    @Override
+    public void remove(int index) {
+        if (count != 0){
+            Node obj = getNode(index);
+            if (index == 0) head = head.next;
+            obj.prev.next = obj.next;
+            obj.next.prev = obj.prev;
+            obj = null;
+            --count;
+        }
+    }
+
+    static class Node {
         public Node next;
         public Node prev;
         public double x;

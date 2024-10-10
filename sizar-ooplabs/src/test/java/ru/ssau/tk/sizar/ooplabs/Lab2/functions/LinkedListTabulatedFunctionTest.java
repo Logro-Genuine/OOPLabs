@@ -94,4 +94,25 @@ class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,5);
         Assertions.assertEquals(5, test.rightBound());
     }
+    @Test
+    void remove1() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {2, 4, 3, 4, -4};
+        int index = 2;
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x, y);
+        double removed_obj = test.getX(index+1);
+        test.remove(index);
+        Assertions.assertEquals(removed_obj, test.getX(index));
+    }
+
+    @Test
+    void remove2() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {2, 4, 3, 4, -4};
+        int index = 0;
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x, y);
+        double obj = test.getX(index+1);
+        test.remove(index);
+        Assertions.assertEquals(obj, test.getX(index));
+    }
 }
