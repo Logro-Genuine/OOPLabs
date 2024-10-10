@@ -2,7 +2,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
     double[] xValues;
     double[] yValues;
 
@@ -167,5 +167,19 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         xValues = newValuesX;
         yValues = newValuesY;
         ++count;
+    }
+
+    public void remove(int index) {
+        double[] tempXValues = new double[count - 1];
+        double[] tempYValues = new double[count - 1];
+        // копируем в новый массив всё до index
+        System.arraycopy(xValues, 0, tempXValues, 0, index);
+        System.arraycopy(yValues, 0, tempYValues, 0, index);
+        // копируем в новый массив всё после index
+        System.arraycopy(xValues, index + 1, tempXValues, index, count - index - 1);
+        System.arraycopy(yValues, index + 1, tempYValues, index, count - index - 1);
+        this.xValues = tempXValues;
+        this.yValues = tempYValues;
+        --count;
     }
 }
