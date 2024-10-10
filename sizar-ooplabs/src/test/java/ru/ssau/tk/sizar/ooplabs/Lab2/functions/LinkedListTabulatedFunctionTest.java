@@ -115,4 +115,25 @@ class LinkedListTabulatedFunctionTest {
         test.remove(index);
         Assertions.assertEquals(obj, test.getX(index));
     }
+    @Test
+    void insert1() {
+        MathFunction func = new IdentityFunction();
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,6);
+        test.insert(2.5, 22222);
+        Assertions.assertEquals(22222, test.getY(3));
+    }
+    @Test
+    void insert2() {
+        MathFunction func = new IdentityFunction();
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,6);
+        test.insert(-1, 22222);
+        Assertions.assertEquals(-1, test.getX(0));
+    }
+    @Test
+    void insert3() {
+        MathFunction func = new IdentityFunction();
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,6);
+        test.insert(6, 22222);
+        Assertions.assertEquals(22222, test.getY(6));
+    }
 }
