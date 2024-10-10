@@ -17,7 +17,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         int index = 0;
         while (current != head.prev && current.x <= x) {
             current = current.next;
-            index++;
+            ++index;
         }
         return index - 1;
     }
@@ -29,10 +29,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected double extrapolateRight(double x) {
-        double x1 = head.prev.prev.x;
-        double x2 = head.prev.x;
-        double y1 = head.prev.prev.y;
-        double y2 = head.prev.y;
         return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
@@ -45,7 +41,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public int getCount() {
-        return this.count;
+        return count;
     }
 
     @Override
@@ -89,12 +85,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double leftBound() {
-        return this.head.x;
+        return head.x;
     }
 
     @Override
     public double rightBound() {
-        return this.head.prev.x;
+        return head.prev.x;
     }
     LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
         double[] xValuesCopy = Arrays.copyOf(xValues, xValues.length);
@@ -125,7 +121,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             if (index == 0) head = head.next;
             obj.prev.next = obj.next;
             obj.next.prev = obj.prev;
-            obj = null;
             --count;
         }
     }
@@ -143,15 +138,15 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
     private void addNode(double x, double y){
         Node new_node = new Node(x, y);
-        if (this.head == null){
-            this.head = new_node;
-            this.head.prev = this.head;
-            this.head.next = this.head;
+        if (head == null){
+            head = new_node;
+            head.prev = head;
+            head.next = head;
         } else {
-            new_node.next = this.head;
-            new_node.prev = this.head.prev;
-            this.head.prev.next = new_node;
-            this.head.prev = new_node;
+            new_node.next = head;
+            new_node.prev = head.prev;
+            head.prev.next = new_node;
+            head.prev = new_node;
         }
         ++count;
     }
