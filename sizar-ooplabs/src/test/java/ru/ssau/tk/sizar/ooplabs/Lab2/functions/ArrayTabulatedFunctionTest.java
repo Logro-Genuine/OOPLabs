@@ -3,8 +3,6 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ArrayTabulatedFunctionTest {
     @Test
     void floorIndexOfX() {
