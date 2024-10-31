@@ -1,6 +1,18 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.DifferentLengthOfArraysException;
+
 public abstract class AbstractTabulatedFunction implements TabulatedFunction{
+    static void checkLengthIsTheSame(double[] xValues, double[] yValues){
+        if (xValues.length != yValues.length){ throw new DifferentLengthOfArraysException();}
+    }
+    static void checkSorted(double[] xValues){
+        for (int i = 1; i < xValues.length; i++)
+        {
+            if (xValues[i] < xValues[i-1]){ throw new ArrayIsNotSortedException();}
+        }
+    }
     protected int count;
     // Метод поиска индекса x
     protected abstract int floorIndexOfX(double x);
@@ -30,5 +42,20 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction{
                 return interpolate(x, floorIndex);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        // Получаем имя класса и размер count
+        builder.append(getClass().getSimpleName()).append(" size = ").append(count).append("\n");
+
+        // Обход всех точек и добавление их в строку
+        for (Point point : this) {
+            builder.append("[").append(point.x).append("; ").append(point.y).append("]\n");
+        }
+
+        return builder.toString();
     }
 }

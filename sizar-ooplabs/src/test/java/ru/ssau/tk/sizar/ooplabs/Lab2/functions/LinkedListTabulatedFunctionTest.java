@@ -2,29 +2,33 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.ArrayIsNotSortedException;
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.DifferentLengthOfArraysException;
+
+import java.util.Iterator;
 
 class LinkedListTabulatedFunctionTest {
 
     @Test
     void floorIndexOfX() {
-        double[] x = {1, 1.5, 2.5, 10, 11};
-        double[] y = {2, 2, 3, 4, -5};
+        double[] x = {1, 1.5, 2.5, 10, 11, 20};
+        double[] y = {-5, 2, 3, 4, 7, 10};
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x,y);
         Assertions.assertEquals(2, test.floorIndexOfX(3.1));
     }
 
     @Test
     void extrapolateLeft() {
-        double[] x = {1, 2, 2.5, 10, 11};
-        double[] y = {2, 4, 3, 4,-5};
+        double[] x = {1, 2, 2.5, 10, 11, 20};
+        double[] y = {-5, 2, 3, 4, 4, 10};
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x,y);
-        Assertions.assertEquals(-2, test.extrapolateLeft(-1));
+        Assertions.assertEquals(-19, test.extrapolateLeft(-1));
     }
 
     @Test
     void extrapolateRight() {
         double[] x = {0, 1, 2, 3, 4, 5};
-        double[] y = {0, 2, 1, 2, 16, 20};
+        double[] y = {0, 1, 2, 2, 16, 20};
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x,y);
         Assertions.assertEquals(24, test.extrapolateRight(6));
     }
@@ -32,7 +36,7 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void interpolate() {
         double[] x = {1, 2, 5, 10 ,11};
-        double[] y = {2, 4, 3, 4, -4};
+        double[] y = {-4, 2, 3, 4, 4};
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x,y);
         Assertions.assertEquals(3, test.interpolate(5,test.floorIndexOfX(5)));
     }
@@ -69,7 +73,7 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void indexOfX() {
         double[] x = {1, 1.5, 2.5, 10, 11};
-        double[] y = {2, 2, 3, 4,-5};
+        double[] y = {-5, 2, 2, 3, 4};
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x,y);
         Assertions.assertEquals(1, test.indexOfX(1.5));
     }
@@ -97,7 +101,7 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void remove1() {
         double[] x = {1, 2, 5, 10 ,11};
-        double[] y = {2, 4, 3, 4, -4};
+        double[] y = {-4, 2, 3, 4, 4};
         int index = 2;
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x, y);
         double removed_obj = test.getX(index+1);
@@ -108,7 +112,7 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void remove2() {
         double[] x = {1, 2, 5, 10 ,11};
-        double[] y = {2, 4, 3, 4, -4};
+        double[] y = {-4, 2, 3, 4, 4};
         int index = 0;
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x, y);
         double obj = test.getX(index+1);
@@ -135,5 +139,71 @@ class LinkedListTabulatedFunctionTest {
         LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,6);
         test.insert(6, 22222);
         Assertions.assertEquals(22222, test.getY(6));
+    }
+    @Test
+    void checkSortedTest1() {
+        double[] x = {1, 2, 5, 10 ,-11};
+        double[] y = {-4, 2, 3, 4, -4};
+        Assertions.assertThrows(ArrayIsNotSortedException.class, ()->new LinkedListTabulatedFunction(x, y));
+    }
+    @Test
+    void checkSortedTest2() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {1, 2, 3, 4, 5};
+        Assertions.assertDoesNotThrow(()->new LinkedListTabulatedFunction(x, y));
+    }
+    @Test
+    void differentLengthTest1() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {-4, 2, 3, 4};
+        Assertions.assertThrows(DifferentLengthOfArraysException.class, ()->new LinkedListTabulatedFunction(x, y));
+    }
+    @Test
+    void differentLengthTest2() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {-4, 2, 3, 4, 10};
+        Assertions.assertDoesNotThrow(()->new LinkedListTabulatedFunction(x, y));
+    }
+    @Test
+    void illegalArgumentTest1() {
+        double[] x = {1, 2, 5, 10 ,11};
+        double[] y = {-4, 2, 3, 4, 4};
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(x, y);
+        Assertions.assertThrows(IllegalArgumentException.class, ()->test.getX(-1));
+    }
+    @Test
+    void illegalArgumentTest2() {
+        double[] x = {2};
+        double[] y = {-4};
+        Assertions.assertThrows(IllegalArgumentException.class, ()->new LinkedListTabulatedFunction(x, y));
+    }
+    @Test
+    void iteratorTest1() {
+        double[] x = {1, 2, 2.5, 10, 11, 20};
+        double[] y = {-5, 2, 3, 4, 4, 10};
+        LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(x,y);
+        Iterator<Point> iterator = function.iterator();
+        int index = 0;
+        while(iterator.hasNext()) {
+            Point point = iterator.next();
+            Assertions.assertEquals(x[index], point.x);
+            Assertions.assertEquals(y[index], point.y);
+            index++;
+        }
+        Assertions.assertEquals(index, x.length);
+    }
+
+    @Test
+    void iteratorTest2() {
+        double[] x = {1, 2, 2.5, 10, 11, 20};
+        double[] y = {-5, 2, 3, 4, 4, 10};
+        LinkedListTabulatedFunction tabulatedFunction = new LinkedListTabulatedFunction(x,y);
+        int index = 0;
+        for (Point point : tabulatedFunction) {
+            Assertions.assertEquals(x[index], point.x);
+            Assertions.assertEquals(y[index], point.y);
+            index++;
+        }
+        Assertions.assertEquals(index, x.length);
     }
 }

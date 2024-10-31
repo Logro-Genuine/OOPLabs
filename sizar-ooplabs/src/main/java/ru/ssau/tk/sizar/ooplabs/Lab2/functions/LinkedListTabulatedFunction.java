@@ -1,15 +1,44 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.InterpolationException;
+
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable,Removable{
     protected int count;
     private Node head;
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
+        double[] xValuesCopy = Arrays.copyOf(xValues, xValues.length);
+        double[] yValuesCopy = Arrays.copyOf(yValues, yValues.length);
+        checkLengthIsTheSame(xValuesCopy, yValuesCopy);
+        if (xValuesCopy.length < 2){throw new IllegalArgumentException("Длина меньше минимальной!");}
+        checkSorted(xValuesCopy);
+        for (int i = 0; i < xValuesCopy.length; i++) {
+            addNode(xValuesCopy[i], yValuesCopy[i]);
+        }
+    }
+
+    LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+        if (xFrom > xTo) {
+            xFrom += xTo;
+            xTo = xFrom-xTo;
+            xFrom -= xTo; // 0, 5, 10
+        }
+        double step = (xTo - xFrom) / (count - 1);
+        double x = xFrom;
+        for (int i = 0; i < count; i++) {
+            addNode(x, source.apply(x));
+            x += step;
+        }
+    }
     @Override
     protected int floorIndexOfX(double x) {
-        if (x <= head.x) {
-            return 0;
+        if (x < head.x) {
+            throw new IllegalArgumentException("Значение меньше левой границы");
         }
+        if (x == head.x){return 0;}
         if (x >= head.prev.x) {
             return count - 1;
         }
@@ -36,6 +65,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     protected double interpolate(double x, int floorIndex) {
         Node left = getNode(floorIndex);
         Node right = left.next;
+        if (x < left.x || x > right.x){throw new InterpolationException();}
         return interpolate(x, left.x, right.x, left.y, right.y);
     }
 
@@ -57,6 +87,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     public void setY(int index, double value) {
         getNode(index).y = value;
+    }
+
+    @Override
+    public void setX(int index, double value) {
+        getNode(index).x = value;
     }
 
     @Override
@@ -91,27 +126,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     public double rightBound() {
         return head.prev.x;
-    }
-    LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
-        double[] xValuesCopy = Arrays.copyOf(xValues, xValues.length);
-        double[] yValuesCopy = Arrays.copyOf(yValues, yValues.length);
-        for (int i = 0; i < xValuesCopy.length; i++) {
-            addNode(xValuesCopy[i], yValuesCopy[i]);
-        }
-    }
-
-    LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if (xFrom > xTo) {
-            xFrom += xTo;
-            xTo = xFrom-xTo;
-            xFrom -= xTo; // 0, 5, 10
-        }
-        double step = (xTo - xFrom) / (count - 1);
-        double x = xFrom;
-        for (int i = 0; i < count; i++) {
-            addNode(x, source.apply(x));
-            x += step;
-        }
     }
 
     @Override
@@ -193,7 +207,37 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         ++count;
     }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Нет больше элементов для итерации.");
+                }
+                Point point = new Point(node.x, node.y);
+                if (node.next == head){
+                    node = null;
+                } else {
+                    node = node.next;
+                }
+                return point;
+            }
+        };
+    }
+
     private Node getNode(int index) {
+        if ((index < 0)||(index>=count)) {
+            throw new IllegalArgumentException("Некорректный индекс.");
+        }
         Node current = head;
         if (index < count / 2) {
             for (int i = 0; i < index; i++) {

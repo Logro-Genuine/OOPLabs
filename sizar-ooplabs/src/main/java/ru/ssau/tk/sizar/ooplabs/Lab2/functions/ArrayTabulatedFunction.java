@@ -1,6 +1,10 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
+import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.InterpolationException;
+
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
     double[] xValues;
@@ -9,18 +13,21 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         count = xValues.length;
+        checkLengthIsTheSame(xValues, yValues);
+        if (xValues.length < 2){throw new IllegalArgumentException("Длина меньше минимальной!");}
+        checkSorted(xValues);
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);
     }
 
     ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count){
+        if (count < 2){throw new IllegalArgumentException();}
         if (xFrom > xTo) {
             double temp = xFrom;
             xFrom = xTo;
             xTo = temp;
         }
         this.count = count;
-
         xValues = new double[count];
         yValues = new double[count];
 
@@ -65,6 +72,9 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         yValues[index] = value;
     }
 
+    @Override
+    public void setX(int index, double value) { xValues[index] = value; }
+
     //Метод, возвращающий индекс первого вхождения аргумента x
     @Override
     public int indexOfX(double x) {
@@ -103,7 +113,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     protected int floorIndexOfX(double x) {
         if (x < xValues[0]) {
-            return 0;
+            throw new IllegalArgumentException("Значение меньше левой границы");
         }
         if (x == xValues[count - 1]) {
             return count - 1;
@@ -128,9 +138,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     // Интерполяция
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) {
-            return yValues[0];
-        }
+        if (x < xValues[floorIndex] || x > xValues[floorIndex+1]){throw new InterpolationException();}
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1],yValues[floorIndex],yValues[floorIndex + 1]);
     }
 
@@ -167,6 +175,28 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         xValues = newValuesX;
         yValues = newValuesY;
         ++count;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < count;
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("Нет больше элементов для итерации.");
+                }
+                Point point = new Point(xValues[index], yValues[index]);
+                ++index;
+                return point;
+            }
+        };
     }
 
     public void remove(int index) {
