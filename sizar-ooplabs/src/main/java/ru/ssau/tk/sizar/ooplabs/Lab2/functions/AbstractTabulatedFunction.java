@@ -47,13 +47,13 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction{
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-
-        // Получаем имя класса и размер count
-        builder.append(getClass().getSimpleName()).append(" size = ").append(count).append("\n");
-
-        // Обход всех точек и добавление их в строку
+        builder.append(getClass().getSimpleName()).append(" size = ").append(getCount()).append("\n");
+        double lastX = this.getX(getCount()-1);
         for (Point point : this) {
-            builder.append("[").append(point.x).append("; ").append(point.y).append("]\n");
+            builder.append("[").append(point.x).append("; ").append(point.y).append("]");
+            if (point.x != lastX){
+                builder.append("\n");
+            }
         }
 
         return builder.toString();

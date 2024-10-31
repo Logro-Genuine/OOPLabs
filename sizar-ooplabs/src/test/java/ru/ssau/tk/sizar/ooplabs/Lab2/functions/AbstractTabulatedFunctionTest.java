@@ -50,6 +50,7 @@ class AbstractTabulatedFunctionTest {
         double[] x = {0, 1, 2, 3};
         double[] y = {1, 2, 3, 5};
         LinkedListTabulatedFunction function = new LinkedListTabulatedFunction(x,y);
-        System.out.println(function.toString());
+        String res = "LinkedListTabulatedFunction size = 4\n[0.0; 1.0]\n[1.0; 2.0]\n[2.0; 3.0]\n[3.0; 5.0]";
+        Assertions.assertTrue(res.equals(function.toString()));
     }
 }
