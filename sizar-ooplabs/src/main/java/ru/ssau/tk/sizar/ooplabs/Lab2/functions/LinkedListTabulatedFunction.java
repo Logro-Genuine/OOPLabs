@@ -2,11 +2,15 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.InterpolationException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable,Removable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable,Removable, Serializable {
+    @Serial
+    private static final long serialVersionUID = -7819078552700832487L;
     protected int count;
     private Node head;
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues) {
@@ -182,7 +186,9 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
-    static class Node {
+    static class Node implements Serializable {
+        @Serial
+        private static final long serialVersionUID = -3295172381359956032L;
         public Node next;
         public Node prev;
         public double x;

@@ -3,7 +3,14 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.ArrayIsNotSortedException;
 import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.DifferentLengthOfArraysException;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction{
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
+    @Serial
+    private static final long serialVersionUID = -2856098861308388081L;
+
+    protected int count;
     static void checkLengthIsTheSame(double[] xValues, double[] yValues){
         if (xValues.length != yValues.length){ throw new DifferentLengthOfArraysException();}
     }
@@ -13,7 +20,6 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction{
             if (xValues[i] < xValues[i-1]){ throw new ArrayIsNotSortedException();}
         }
     }
-    protected int count;
     // Метод поиска индекса x
     protected abstract int floorIndexOfX(double x);
     // Метод экстраполяции слева

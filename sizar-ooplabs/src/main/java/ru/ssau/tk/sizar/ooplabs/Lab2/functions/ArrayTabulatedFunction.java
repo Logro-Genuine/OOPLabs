@@ -2,11 +2,16 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.functions;
 
 import ru.ssau.tk.sizar.ooplabs.Lab2.exceptions.InterpolationException;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable, Serializable {
+    @Serial
+    private static final long serialVersionUID = 982843010366960187L;
+
     double[] xValues;
     double[] yValues;
 
