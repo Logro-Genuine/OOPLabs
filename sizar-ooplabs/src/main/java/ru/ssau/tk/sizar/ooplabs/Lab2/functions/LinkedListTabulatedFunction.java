@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable,Removable, Serializable {
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction,Insertable,Removable, Serializable {
     @Serial
     private static final long serialVersionUID = -7819078552700832487L;
     protected int count;
@@ -24,7 +24,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
-    LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (xFrom > xTo) {
             xFrom += xTo;
             xTo = xFrom-xTo;

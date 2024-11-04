@@ -48,10 +48,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
         double step = (xTo - xFrom) / (count - 1);
 
-        for (int i = 1; i < count - 1; i++)
-            xValues[i] = xValues[i - 1] + step;
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++) {
+            xValues[i] = xFrom + i * step;
             yValues[i] = source.apply(xValues[i]);
+        }
+
     }
 
     // Метод получения количества табулированных значений:
