@@ -11,8 +11,10 @@ public class MultiplyingTask implements Runnable{
 
     @Override
     public void run() {
-        for (int i = 0; i < function.getCount(); i++){
-            function.setY(i, function.getY(i) * 2);
+        for (int i = 0; i < function.getCount(); i++) {
+            synchronized (function) {
+                function.setY(i, function.getY(i) * 2);
+            }
         }
         System.out.printf("Thread %s has completed the task.%n", Thread.currentThread().getName());
 
