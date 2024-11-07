@@ -1,17 +1,15 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.concurrent;
 
-import ru.ssau.tk.sizar.ooplabs.Lab2.functions.LinkedListTabulatedFunction;
 import ru.ssau.tk.sizar.ooplabs.Lab2.functions.Point;
 import ru.ssau.tk.sizar.ooplabs.Lab2.functions.TabulatedFunction;
 import ru.ssau.tk.sizar.ooplabs.Lab2.operations.TabulatedFunctionOperationService;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SynchronizedTabulatedFunction implements TabulatedFunction {
     private final TabulatedFunction tabulatedFunction;
-    SynchronizedTabulatedFunction(TabulatedFunction tabulatedFunction){;
+    public SynchronizedTabulatedFunction(TabulatedFunction tabulatedFunction){
         this.tabulatedFunction = tabulatedFunction;
     }
     @Override
@@ -84,4 +82,15 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     public double apply(double x) {
         synchronized (tabulatedFunction){return tabulatedFunction.apply(x);}
     }
+
+    public interface Operation<T> {
+        T apply(SynchronizedTabulatedFunction function);
+    }
+
+    public <T> T doSynchronously(Operation<? extends T> operation) {
+        synchronized (this) {
+            return operation.apply(this);
+        }
+    }
 }
+
