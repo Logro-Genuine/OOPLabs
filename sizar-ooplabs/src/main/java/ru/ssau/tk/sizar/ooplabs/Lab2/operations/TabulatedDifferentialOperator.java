@@ -1,5 +1,6 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.operations;
 
+import ru.ssau.tk.sizar.ooplabs.Lab2.concurrent.SynchronizedTabulatedFunction;
 import ru.ssau.tk.sizar.ooplabs.Lab2.functions.Point;
 import ru.ssau.tk.sizar.ooplabs.Lab2.functions.TabulatedFunction;
 import ru.ssau.tk.sizar.ooplabs.Lab2.functions.factory.ArrayTabulatedFunctionFactory;
@@ -38,5 +39,13 @@ public class TabulatedDifferentialOperator implements DifferentialOperator<Tabul
     @Override
     public double apply(double x) {
         throw new UnsupportedOperationException();
+    }
+
+    public TabulatedFunction deriveSynchronously(TabulatedFunction function) {
+        if (function instanceof SynchronizedTabulatedFunction) {
+            return derive(function);
+        }
+        SynchronizedTabulatedFunction synchronizedFunction = new SynchronizedTabulatedFunction(function);
+        return synchronizedFunction.doSynchronously(this::derive);
     }
 }

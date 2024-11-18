@@ -71,6 +71,14 @@ class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    void setX() {
+        MathFunction func = new SqrFunction();
+        LinkedListTabulatedFunction test = new LinkedListTabulatedFunction(func,0,5,9);
+        test.setX(2,10);
+        Assertions.assertEquals(10, test.getX(2));
+    }
+
+    @Test
     void indexOfX() {
         double[] x = {1, 1.5, 2.5, 10, 11};
         double[] y = {-5, 2, 2, 3, 4};
