@@ -1,7 +1,12 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
+@Getter
+@Setter
 @Table(name = "functions")
 public class MathFunctionEntity {
     @Id
