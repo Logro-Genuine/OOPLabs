@@ -1,8 +1,14 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
+@Entity
 @Table(name = "functions")
+@Data
 public class MathFunctionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
