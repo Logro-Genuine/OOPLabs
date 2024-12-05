@@ -44,7 +44,7 @@ public class MathFunctionService {
         List<MathFunctionEntity> mathFunctionEntities;
 
         if (name != null && !name.isEmpty()) {
-            mathFunctionEntities = mathFunctionRepo.findByName(name);
+            mathFunctionEntities = mathFunctionRepo.findByFunc_name(name);
         } else {
             mathFunctionEntities = mathFunctionRepo.findAll();
         }

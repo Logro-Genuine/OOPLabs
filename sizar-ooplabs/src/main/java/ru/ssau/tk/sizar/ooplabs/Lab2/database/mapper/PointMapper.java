@@ -14,9 +14,9 @@ public class PointMapper {
         entity.setXValue(dto.getXValue());
         entity.setYValue(dto.getYValue());
 
-        //MathFunctionEntity function = new MathFunctionEntity();
-        //function.setId(dto.getFuncId());
-        //entity.setFunc_name(function);
+        MathFunctionEntity function = new MathFunctionEntity();
+        function.setId(dto.getFuncId());
+        entity.setFunc_ent(function);
         return entity;
     }
     public static PointDTO toDTO(PointEntity entity){
@@ -25,7 +25,7 @@ public class PointMapper {
         }
         PointDTO dto = new PointDTO();
         dto.setId(entity.getId());
-        //dto.setFuncId(entity.getFunctionEntity() != null ? entity.getFunctionEntity().getId() : 0);
+        dto.setFuncId(entity.getFunc_ent() != null ? entity.getFunc_ent().getId() : 0);
         dto.setXValue(entity.getXValue());
         dto.setYValue(entity.getYValue());
         return dto;
