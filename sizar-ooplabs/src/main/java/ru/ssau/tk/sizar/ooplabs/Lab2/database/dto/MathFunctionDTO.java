@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MathFunctionDTO {
     private Long id;
-    private String func_name;
-    private Integer points_count;
-    private Double x_from;
-    private Double x_to;
+    private String funcName;
+    private Integer pointsCount;
+    private Double xFrom;
+    private Double xTo;
 }

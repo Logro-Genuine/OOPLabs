@@ -16,7 +16,7 @@ class PointMapperTest {
         assertEquals(pointDTO.getId(), pointEntity.getId());
         assertEquals(pointDTO.getXValue(), pointEntity.getXValue());
         assertEquals(pointDTO.getYValue(), pointEntity.getYValue());
-        assertEquals(pointDTO.getFuncId(), pointEntity.getFunc_ent().getId());
+        assertEquals(pointDTO.getFunc(), pointEntity.getFunc().getId());
     }
 
     @Test
@@ -28,6 +28,6 @@ class PointMapperTest {
         assertEquals(pointDTO.getId(), pointEntity.getId());
         assertEquals(pointDTO.getXValue(), pointEntity.getXValue());
         assertEquals(pointDTO.getYValue(), pointEntity.getYValue());
-        assertEquals(pointDTO.getFuncId(), pointEntity.getFunc_ent().getId());
+        assertEquals(pointDTO.getFunc(), pointEntity.getFunc().getId());
     }
 }

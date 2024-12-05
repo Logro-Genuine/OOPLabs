@@ -22,7 +22,7 @@ public class MathFunctionService {
         return MathFunctionMapper.toDTO(savedEntity);
     }
 
-    public MathFunctionDTO read(int id) {
+    public MathFunctionDTO read(Long id) {
         return mathFunctionRepo
                 .findById((long) id)
                 .map(MathFunctionMapper::toDTO)
@@ -36,7 +36,7 @@ public class MathFunctionService {
         return MathFunctionMapper.toDTO(editedFunction);
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         this.mathFunctionRepo.deleteById((long)id);
     }
 
@@ -44,7 +44,7 @@ public class MathFunctionService {
         List<MathFunctionEntity> mathFunctionEntities;
 
         if (name != null && !name.isEmpty()) {
-            mathFunctionEntities = mathFunctionRepo.findByFunc_name(name);
+            mathFunctionEntities = mathFunctionRepo.findByFuncName(name);
         } else {
             mathFunctionEntities = mathFunctionRepo.findAll();
         }

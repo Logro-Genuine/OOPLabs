@@ -13,5 +13,5 @@ public class PointDTO {
     private Long id;
     private Double xValue;
     private Double yValue;
-    private Long funcId;
+    private Long func;
 }

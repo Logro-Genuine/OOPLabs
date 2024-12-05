@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface PointsRepo extends JpaRepository<PointEntity, Long> {
-    List<PointEntity> findByFunc_id(MathFunctionEntity mathFunctionEntity);
+    List<PointEntity> findByFuncId(MathFunctionEntity mathFunctionEntity);
 }

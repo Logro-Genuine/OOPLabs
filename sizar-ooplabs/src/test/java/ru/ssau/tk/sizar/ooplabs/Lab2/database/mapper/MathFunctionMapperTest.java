@@ -13,10 +13,10 @@ class MathFunctionMapperTest {
         MathFunctionEntity mathFunctionEntity = MathFunctionMapper.toEntity(mathFunctionDTO);
 
         assertEquals(mathFunctionEntity.getId(), mathFunctionDTO.getId());
-        assertEquals(mathFunctionEntity.getFunc_name(), mathFunctionDTO.getFunc_name());
-        assertEquals(mathFunctionEntity.getPoints_count(), mathFunctionDTO.getPoints_count());
-        assertEquals(mathFunctionEntity.getX_to(), mathFunctionDTO.getX_to());
-        assertEquals(mathFunctionEntity.getX_from(), mathFunctionDTO.getX_from());
+        assertEquals(mathFunctionEntity.getFuncName(), mathFunctionDTO.getFuncName());
+        assertEquals(mathFunctionEntity.getPointsCount(), mathFunctionDTO.getPointsCount());
+        assertEquals(mathFunctionEntity.getXTo(), mathFunctionDTO.getXTo());
+        assertEquals(mathFunctionEntity.getXFrom(), mathFunctionDTO.getXFrom());
     }
     @Test
     void testEntityToDTO(){
@@ -24,10 +24,10 @@ class MathFunctionMapperTest {
         MathFunctionDTO mathFunctionDTO = MathFunctionMapper.toDTO(mathFunctionEntity);
 
         assertEquals(mathFunctionEntity.getId(), mathFunctionDTO.getId());
-        assertEquals(mathFunctionEntity.getFunc_name(), mathFunctionDTO.getFunc_name());
-        assertEquals(mathFunctionEntity.getPoints_count(), mathFunctionDTO.getPoints_count());
-        assertEquals(mathFunctionEntity.getX_to(), mathFunctionDTO.getX_to());
-        assertEquals(mathFunctionEntity.getX_from(), mathFunctionDTO.getX_from());
+        assertEquals(mathFunctionEntity.getFuncName(), mathFunctionDTO.getFuncName());
+        assertEquals(mathFunctionEntity.getPointsCount(), mathFunctionDTO.getPointsCount());
+        assertEquals(mathFunctionEntity.getXTo(), mathFunctionDTO.getXTo());
+        assertEquals(mathFunctionEntity.getXFrom(), mathFunctionDTO.getXFrom());
 
     }
 

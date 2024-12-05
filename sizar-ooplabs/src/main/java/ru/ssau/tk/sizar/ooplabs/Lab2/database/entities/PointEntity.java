@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+@Entity
+@Table(name = "points")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,14 +17,12 @@ public class PointEntity {
     @Id
     @GeneratedValue
     private Long id;
-
     @Column(name = "x_value")
     private Double xValue;
-
     @Column(name = "y_value")
     private Double yValue;
 
     @ManyToOne
     @JoinColumn(name = "func_id", referencedColumnName = "id")
-    private MathFunctionEntity func_ent;
+    private MathFunctionEntity func;
 }

@@ -50,7 +50,7 @@ public class PointService {
     }
 
     private List<PointDTO> getPointsForFunction(MathFunctionEntity function) {
-        return pointRepo.findByFunc_id(function)
+        return pointRepo.findByFuncId(function)
                 .stream()
                 .map(PointMapper::toDTO)
                 .collect(Collectors.toList());
