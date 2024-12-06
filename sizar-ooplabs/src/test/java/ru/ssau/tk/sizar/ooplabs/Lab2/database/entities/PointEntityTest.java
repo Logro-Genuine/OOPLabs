@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PointEntityTest {
     @Test
-    void PointEntityTest(){
+    void PointEntityTest1(){
         MathFunctionEntity mathFunctionEntity = new MathFunctionEntity();
         PointEntity PointEntity = new PointEntity(7L, 7.0, 0.9, mathFunctionEntity);
 

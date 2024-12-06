@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MathFunctionEntityTest {
     @Test
-    void MathFunctionEntityTest(){
+    void MathFunctionEntityTest1(){
         MathFunctionEntity mathFunctionEntity = new MathFunctionEntity(1L, "MathFunctionTest", 5, -10.0, 10.0, null);
 
         assertEquals(mathFunctionEntity.getId(), 1L);

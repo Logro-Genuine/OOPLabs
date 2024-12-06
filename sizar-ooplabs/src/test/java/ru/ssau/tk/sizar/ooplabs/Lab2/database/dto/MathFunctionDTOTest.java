@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MathFunctionDTOTest {
     @Test
-    void MathFunctionDTOTest(){
+    void MathFunctionDTOTest1(){
         MathFunctionDTO mathFunctionDTO = new MathFunctionDTO(3L,"MathFunctionTest", 5, -10.0, 10.0);
 
         assertEquals(mathFunctionDTO.getId(), 3L);
