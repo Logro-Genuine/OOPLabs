@@ -33,7 +33,7 @@ class PointsRepoTest {
         pointsRepo.save(point2);
         pointsRepo.save(point3);
 
-        List<PointEntity> points = pointsRepo.findByFuncId(myFunction);
+        List<PointEntity> points = pointsRepo.findByFuncId(myFunction.getId());
         assertEquals(3, points.size());
     }
 }

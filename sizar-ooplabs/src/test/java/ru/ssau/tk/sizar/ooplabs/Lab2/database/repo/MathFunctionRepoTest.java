@@ -20,7 +20,7 @@ class MathFunctionRepoTest {
     @Autowired
     private MathFunctionRepo mathFunctionRepo;
     @Test
-    void testFindByFunc_name() {
+    void testFindByFuncName() {
         MathFunctionEntity func1 = new MathFunctionEntity(1L, "func1", 5, -10.0, 10.0, null);
         MathFunctionEntity func2 = new MathFunctionEntity(2L, "func1", 10, -1.0, 10.0, null);
         MathFunctionEntity func3 = new MathFunctionEntity(3L, "func2", 5, 3.0, 9.0, null);
