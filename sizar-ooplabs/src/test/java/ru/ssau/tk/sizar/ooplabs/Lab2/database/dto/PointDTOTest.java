@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PointDTOTest {
     @Test
-    void PointDTOTest(){
+    void PointDTOTest1(){
         PointDTO pointDTO = new PointDTO(7L, 7.0, 0.9, 9L);
 
         assertEquals(pointDTO.getId(), 7L);
