@@ -12,7 +12,7 @@ class PointDTOTest {
         assertEquals(pointDTO.getId(), 7L);
         assertEquals(pointDTO.getXValue(), 7.0);
         assertEquals(pointDTO.getYValue(), 0.9);
-        assertEquals(pointDTO.getFuncId(), 9L);
+        assertEquals(pointDTO.getFunc(), 9L);
 
         pointDTO.setId(6L);
         assertEquals(pointDTO.getId(), 6L);
@@ -20,8 +20,8 @@ class PointDTOTest {
         assertEquals(pointDTO.getXValue(), -0.3);
         pointDTO.setYValue(-1000.1);
         assertEquals(pointDTO.getYValue(), -1000.1);
-        pointDTO.setFuncId(1234L);
-        assertEquals(pointDTO.getFuncId(), 1234L);
+        pointDTO.setFunc(1234L);
+        assertEquals(pointDTO.getFunc(), 1234L);
     }
 
 }

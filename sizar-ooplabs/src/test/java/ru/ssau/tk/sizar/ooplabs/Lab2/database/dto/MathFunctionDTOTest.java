@@ -10,20 +10,20 @@ class MathFunctionDTOTest {
         MathFunctionDTO mathFunctionDTO = new MathFunctionDTO(3L,"MathFunctionTest", 5, -10.0, 10.0);
 
         assertEquals(mathFunctionDTO.getId(), 3L);
-        assertEquals(mathFunctionDTO.getFunc_name(), "MathFunctionTest");
-        assertEquals(mathFunctionDTO.getPoints_count(), 5);
-        assertEquals(mathFunctionDTO.getX_from(), -10.0);
-        assertEquals(mathFunctionDTO.getX_to(), 10.0);
+        assertEquals(mathFunctionDTO.getFuncName(), "MathFunctionTest");
+        assertEquals(mathFunctionDTO.getPointsCount(), 5);
+        assertEquals(mathFunctionDTO.getXFrom(), -10.0);
+        assertEquals(mathFunctionDTO.getXTo(), 10.0);
 
         mathFunctionDTO.setId(0L);
         assertEquals(mathFunctionDTO.getId(), 0L);
-        mathFunctionDTO.setFunc_name("FunctionMathTest");
-        assertEquals(mathFunctionDTO.getFunc_name(), "FunctionMathTest");
-        mathFunctionDTO.setPoints_count(10);
-        assertEquals(mathFunctionDTO.getPoints_count(), 10);
-        mathFunctionDTO.setX_from(7.5);
-        assertEquals(mathFunctionDTO.getX_from(), 7.5);
-        mathFunctionDTO.setX_to(9.1);
-        assertEquals(mathFunctionDTO.getX_to(), 9.1);
+        mathFunctionDTO.setFuncName("FunctionMathTest");
+        assertEquals(mathFunctionDTO.getFuncName(), "FunctionMathTest");
+        mathFunctionDTO.setPointsCount(10);
+        assertEquals(mathFunctionDTO.getPointsCount(), 10);
+        mathFunctionDTO.setXFrom(7.5);
+        assertEquals(mathFunctionDTO.getXFrom(), 7.5);
+        mathFunctionDTO.setXTo(9.1);
+        assertEquals(mathFunctionDTO.getXTo(), 9.1);
     }
 }

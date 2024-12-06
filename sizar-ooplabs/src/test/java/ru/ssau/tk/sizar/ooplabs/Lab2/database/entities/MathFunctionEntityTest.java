@@ -13,26 +13,26 @@ class MathFunctionEntityTest {
         MathFunctionEntity mathFunctionEntity = new MathFunctionEntity(1L, "MathFunctionTest", 5, -10.0, 10.0, null);
 
         assertEquals(mathFunctionEntity.getId(), 1L);
-        assertEquals(mathFunctionEntity.getFunc_name(), "MathFunctionTest");
-        assertEquals(mathFunctionEntity.getPoints_count(), 5);
-        assertEquals(mathFunctionEntity.getX_from(), -10.0);
-        assertEquals(mathFunctionEntity.getX_to(), 10.0);
+        assertEquals(mathFunctionEntity.getFuncName(), "MathFunctionTest");
+        assertEquals(mathFunctionEntity.getPointsCount(), 5);
+        assertEquals(mathFunctionEntity.getXFrom(), -10.0);
+        assertEquals(mathFunctionEntity.getXTo(), 10.0);
         assertNull(mathFunctionEntity.getPointEntityList());
 
         mathFunctionEntity.setId(0L);
         assertEquals(mathFunctionEntity.getId(), 0L);
 
-        mathFunctionEntity.setFunc_name("FunctionMathTest");
-        assertEquals(mathFunctionEntity.getFunc_name(), "FunctionMathTest");
+        mathFunctionEntity.setFuncName("FunctionMathTest");
+        assertEquals(mathFunctionEntity.getFuncName(), "FunctionMathTest");
 
-        mathFunctionEntity.setPoints_count(10);
-        assertEquals(mathFunctionEntity.getPoints_count(), 10);
+        mathFunctionEntity.setPointsCount(10);
+        assertEquals(mathFunctionEntity.getPointsCount(), 10);
 
-        mathFunctionEntity.setX_from(7.5);
-        assertEquals(mathFunctionEntity.getX_from(), 7.5);
+        mathFunctionEntity.setXFrom(7.5);
+        assertEquals(mathFunctionEntity.getXFrom(), 7.5);
 
-        mathFunctionEntity.setX_to(9.1);
-        assertEquals(mathFunctionEntity.getX_to(), 9.1);
+        mathFunctionEntity.setXTo(9.1);
+        assertEquals(mathFunctionEntity.getXTo(), 9.1);
 
         List <PointEntity> pointEntityList = List.of(new PointEntity[]{
                 new PointEntity(2L, 2.3, 1.3, mathFunctionEntity),

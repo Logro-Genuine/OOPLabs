@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface MathFunctionRepo extends JpaRepository<MathFunctionEntity, Long> {
-    List<MathFunctionEntity> findByFunc_name(String functionType);
+    List<MathFunctionEntity> findByFuncName(String functionType);
 }

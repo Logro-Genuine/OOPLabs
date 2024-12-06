@@ -13,7 +13,7 @@ class PointEntityTest {
         assertEquals(PointEntity.getId(), 7L);
         assertEquals(PointEntity.getXValue(), 7.0);
         assertEquals(PointEntity.getYValue(), 0.9);
-        assertEquals(PointEntity.getFunc_ent(), mathFunctionEntity);
+        assertEquals(PointEntity.getFunc(), mathFunctionEntity);
 
         PointEntity.setId(6L);
         assertEquals(PointEntity.getId(), 6L);
@@ -23,8 +23,8 @@ class PointEntityTest {
         assertEquals(PointEntity.getYValue(), -1000.1);
 
         MathFunctionEntity otherMathFunctionEntity = new MathFunctionEntity();
-        PointEntity.setFunc_ent(otherMathFunctionEntity);
-        assertEquals(PointEntity.getFunc_ent(), otherMathFunctionEntity);
+        PointEntity.setFunc(otherMathFunctionEntity);
+        assertEquals(PointEntity.getFunc(), otherMathFunctionEntity);
     }
 
 }
