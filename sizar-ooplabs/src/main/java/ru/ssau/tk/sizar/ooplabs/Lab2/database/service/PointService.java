@@ -1,5 +1,6 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.PointDTO;
@@ -26,10 +27,10 @@ public class PointService {
         return PointMapper.toDTO(newPoint);
     }
 
-    public PointDTO read(Long id) {
+    public PointDTO read(Long id){
         return this.pointRepo.findById(id)
                 .map(PointMapper::toDTO)
-                .orElse(null);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public PointDTO update(PointDTO pointDTO) {
@@ -39,14 +40,17 @@ public class PointService {
         return PointMapper.toDTO(editedPoint);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws EntityNotFoundException{
+        if (!this.pointRepo.existsById(id)){
+            throw new EntityNotFoundException();
+        }
         this.pointRepo.deleteById(id);
     }
 
     public List<PointDTO> findByFunction(Long id) {
         return mathFunctionRepo.findById(id)
                 .map(this::getPointsForFunction)
-                .orElse(null);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     private List<PointDTO> getPointsForFunction(MathFunctionEntity function) {

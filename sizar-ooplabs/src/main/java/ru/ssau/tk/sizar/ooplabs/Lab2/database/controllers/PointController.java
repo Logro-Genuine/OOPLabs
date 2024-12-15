@@ -1,6 +1,6 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +11,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/points")
+@RequiredArgsConstructor
 public class PointController {
     private final PointService pointService;
-
-    @Autowired
-    public PointController(PointService pointService) {
-        this.pointService = pointService;
-    }
 
     @PostMapping
     public ResponseEntity<PointDTO> createPoint(@RequestBody PointDTO pointDTO) {
@@ -55,7 +51,7 @@ public class PointController {
     @GetMapping("/function/{functionId}")
     public ResponseEntity<List<PointDTO>> getPointsByFunction(@PathVariable Long functionId) {
         List<PointDTO> points = pointService.findByFunction(functionId);
-        if (points != null) {
+        if (!points.isEmpty()) {
             return new ResponseEntity<>(points, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

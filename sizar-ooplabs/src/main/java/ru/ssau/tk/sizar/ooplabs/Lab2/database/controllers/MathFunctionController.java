@@ -2,7 +2,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/functions")
+@RequiredArgsConstructor
 public class MathFunctionController {
     private final MathFunctionService mathFunctionService;
-
-    @Autowired
-    public MathFunctionController(MathFunctionService mathFunctionService) {
-        this.mathFunctionService = mathFunctionService;
-    }
 
     @GetMapping
     public ResponseEntity<List<MathFunctionDTO>> getFunctions (@RequestParam(required = false) String name){
@@ -49,12 +45,8 @@ public class MathFunctionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MathFunctionDTO> updateFunction(@RequestBody MathFunctionDTO updatedFunction) {
-        try {
-            MathFunctionDTO updated = mathFunctionService.update(updatedFunction);
-            return new ResponseEntity<>(updated, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        MathFunctionDTO updated = mathFunctionService.update(updatedFunction);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

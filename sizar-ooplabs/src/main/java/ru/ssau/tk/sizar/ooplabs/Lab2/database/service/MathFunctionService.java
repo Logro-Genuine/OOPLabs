@@ -1,6 +1,9 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.NotFound;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.MathFunctionDTO;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.MathFunctionEntity;
@@ -22,11 +25,11 @@ public class MathFunctionService {
         return MathFunctionMapper.toDTO(savedEntity);
     }
 
-    public MathFunctionDTO read(Long id) {
+    public MathFunctionDTO read(Long id) throws EntityNotFoundException{
         return mathFunctionRepo
                 .findById((long) id)
                 .map(MathFunctionMapper::toDTO)
-                .orElse(null);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public MathFunctionDTO update(MathFunctionDTO functionDTO) {
@@ -36,17 +39,20 @@ public class MathFunctionService {
         return MathFunctionMapper.toDTO(editedFunction);
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws EntityNotFoundException {
+        if (this.mathFunctionRepo.findById(id).isEmpty()) {
+            throw new EntityNotFoundException();
+        }
         this.mathFunctionRepo.deleteById((long)id);
     }
 
-    public List<MathFunctionDTO> findFunctions(String name) {
+    public List<MathFunctionDTO> findFunctions(String name) throws EntityNotFoundException {
         List<MathFunctionEntity> mathFunctionEntities;
 
         if (name != null && !name.isEmpty()) {
             mathFunctionEntities = mathFunctionRepo.findByFuncName(name);
         } else {
-            mathFunctionEntities = mathFunctionRepo.findAll();
+            throw new EntityNotFoundException();
         }
 
         return mathFunctionEntities.stream()

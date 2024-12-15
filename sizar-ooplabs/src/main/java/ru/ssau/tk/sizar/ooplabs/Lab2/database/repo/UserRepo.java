@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserEntity, Long> {
-    List<UserEntity> findByUsername(String username);
+    UserEntity findByUsername(String username);
+    boolean existsByUsername(String username);
+    void deleteByUsername(String username);
 }
