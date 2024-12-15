@@ -11,6 +11,7 @@ import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Getter
@@ -30,5 +31,25 @@ public class UserData implements UserDetails {
                 user.getPassword(),
                 grantedAuthorities
         );
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 }

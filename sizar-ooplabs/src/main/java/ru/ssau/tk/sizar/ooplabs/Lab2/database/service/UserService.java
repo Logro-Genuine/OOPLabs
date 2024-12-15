@@ -1,6 +1,5 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -1,5 +1,6 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -68,8 +69,9 @@ public class PointServiceTest {
         PointDTO pointDTO = new PointDTO(null,10.0, 10.0, createdMathFunction.getId());
         PointDTO createdPointDTO = pointService.create(pointDTO);
 
-        assertNotNull(pointService.read(createdPointDTO.getId()));
         pointService.delete(createdPointDTO.getId());
-        assertNull(pointService.read(createdPointDTO.getId()));
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            pointService.read(createdPointDTO.getId());});
     }
 }

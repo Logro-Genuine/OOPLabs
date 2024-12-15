@@ -1,6 +1,8 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +60,9 @@ class MathFunctionServiceTest {
         MathFunctionDTO mathFunctionDTO = new MathFunctionDTO(null, "delete test func", 10, -5.3, 9.0);
         MathFunctionDTO createdMathFunctionDTO = mathFunctionService.create(mathFunctionDTO);
 
-        assertNotNull(mathFunctionService.read(createdMathFunctionDTO.getId()));
-
         mathFunctionService.delete(createdMathFunctionDTO.getId());
-        assertNull(mathFunctionService.read(createdMathFunctionDTO.getId()));
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            mathFunctionService.read(createdMathFunctionDTO.getId());});
     }
 }
