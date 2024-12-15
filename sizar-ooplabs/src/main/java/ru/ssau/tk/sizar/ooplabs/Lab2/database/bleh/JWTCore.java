@@ -21,6 +21,7 @@ public class JWTCore {
                         .signWith(SignatureAlgorithm.HS256, secret).compact();
     }
 
-    public String getNameFromJwt(String jwt) {
+    public String getNameFromJwt(String token) {
+        return Jwts.parser().setSigningKey(secret).build().parseClaimsJws(token).getPayload().getSubject();
     }
 }
