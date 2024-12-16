@@ -1,10 +1,9 @@
-package ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh;
+package ru.ssau.tk.sizar.ooplabs.Lab2.database.config;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.UserData;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh;
+package ru.ssau.tk.sizar.ooplabs.Lab2.database.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

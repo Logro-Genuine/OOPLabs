@@ -9,9 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.JWTCore;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SigninRequest;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SignupRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.JWTCore;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SigninRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SignupRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
 

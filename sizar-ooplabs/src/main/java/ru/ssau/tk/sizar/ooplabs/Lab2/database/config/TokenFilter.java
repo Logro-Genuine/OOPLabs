@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.JWTCore;
 
 import java.io.IOException;
 
