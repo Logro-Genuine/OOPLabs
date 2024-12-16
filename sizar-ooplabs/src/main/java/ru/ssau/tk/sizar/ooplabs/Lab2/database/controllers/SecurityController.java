@@ -10,10 +10,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.JWTCore;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SigninRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SignupRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 public class SecurityController {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
@@ -27,10 +30,41 @@ public class SecurityController {
         this.jwtCore = jwtCore;
     }
 
-    //@PostMapping("signin")
+    @PostMapping("/signin")
+    public ResponseEntity<?> signin (@RequestBody SigninRequest signinRequest){
+        Authentication authentication = null;
+        try {
+            authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getUsername(),
+                    signinRequest.getPassword()));
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtCore.generateToken(authentication);
+        return ResponseEntity.ok(jwt);
+    }
 
-    //@PostMapping("signup")
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup (@RequestBody SignupRequest signupRequest){
+        if (userRepo.existsByUsername(signupRequest.getUsername())){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose different name");
+        }
+        String hashed = passwordEncoder.encode(signupRequest.getPassword());
+        UserEntity user = new UserEntity();
+        user.setUsername(signupRequest.getUsername());
+        user.setPassword(hashed);
+        userRepo.save(user);
+        return ResponseEntity.ok("Success");
+    }
 
-    //@DeleteMapping("delete/{username}")
+    @DeleteMapping("delete/{username}")
+    public ResponseEntity<?> deleteUser(@PathVariable String username) {
+        if (!userRepo.existsByUsername(username)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        userRepo.deleteByUsername(username);
+        return ResponseEntity.ok("User deleted successfully");
+    }
 }
 

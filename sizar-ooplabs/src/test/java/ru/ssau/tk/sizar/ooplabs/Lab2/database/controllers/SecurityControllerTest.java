@@ -1,0 +1,133 @@
+package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.JWTCore;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SigninRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.bleh.SignupRequest;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.UserData;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+@TestPropertySource(properties = {
+        "ru.ssau.tk.sizar.ooplabs.secret=3n$@8f!2#jKq9^&*zR7wP1mL0xYb6@!Q",
+        "ru.ssau.tk.sizar.ooplabs.lifetime=3600000"
+})
+class SecurityControllerTest {
+    @Mock
+    private UserRepo userRepo;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private AuthenticationManager manager;
+
+    @Mock
+    private JWTCore jwtCore;
+
+    @InjectMocks
+    private SecurityController securityController;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testSignin_Success() {
+        // Создаем мок-объект UserData
+        UserData userData = mock(UserData.class);
+        when(userData.getUsername()).thenReturn("user");
+
+        // Создаем мок-объект Authentication
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(userData);
+
+        // Настраиваем AuthenticationManager для возврата мок-объекта Authentication
+        when(manager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
+        when(jwtCore.generateToken(authentication)).thenReturn("jwt-token");
+
+        // Создаем объект SigninRequest
+        SigninRequest signinRequest = new SigninRequest("user", "password");
+
+        // Выполняем тестируемый метод
+        ResponseEntity<?> response = securityController.signin(signinRequest);
+
+        // Проверяем результат
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("jwt-token", response.getBody());
+    }
+
+    @Test
+    void testSignin_BadCredentials() {
+        SigninRequest signinRequest = new SigninRequest("user", "wrong-password");
+        when(manager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenThrow(new BadCredentialsException(""));
+
+        ResponseEntity<?> response = securityController.signin(signinRequest);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
+
+    @Test
+    void testSignup_Success() {
+        SignupRequest signupRequest = new SignupRequest("newuser", "password");
+        when(userRepo.existsByUsername(signupRequest.getUsername())).thenReturn(false);
+        when(passwordEncoder.encode(signupRequest.getPassword())).thenReturn("hashed-password");
+
+        ResponseEntity<?> response = securityController.signup(signupRequest);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Success", response.getBody());
+        verify(userRepo).save(any(UserEntity.class));
+    }
+
+    @Test
+    void testSignup_UsernameExists() {
+        SignupRequest signupRequest = new SignupRequest("existinguser", "password");
+        when(userRepo.existsByUsername(signupRequest.getUsername())).thenReturn(true);
+
+        ResponseEntity<?> response = securityController.signup(signupRequest);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Choose different name", response.getBody());
+    }
+
+    @Test
+    void testDeleteUser_Success() {
+        String username = "user";
+        when(userRepo.existsByUsername(username)).thenReturn(true);
+
+        ResponseEntity<?> response = securityController.deleteUser(username);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("User deleted successfully", response.getBody());
+        verify(userRepo).deleteByUsername(username);
+    }
+
+    @Test
+    void testDeleteUser_NotFound() {
+        String username = "nonexistentuser";
+        when(userRepo.existsByUsername(username)).thenReturn(false);
+
+        ResponseEntity<?> response = securityController.deleteUser(username);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("User not found", response.getBody());
+    }
+}
