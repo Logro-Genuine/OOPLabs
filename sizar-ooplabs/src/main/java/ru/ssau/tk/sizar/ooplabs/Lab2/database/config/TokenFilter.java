@@ -13,36 +13,45 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 @Component
 public class TokenFilter extends OncePerRequestFilter {
-    private JWTCore jwtCore;
-    private UserDetailsService userDetailsService;
+    private final JWTCore jwtCore;
+    private final UserDetailsService userDetailsService;
+
+    public TokenFilter(JWTCore jwtCore, UserDetailsService userDetailsService) {
+        this.jwtCore = jwtCore;
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = null;
         String username = null;
         UserDetails userDetails = null;
         UsernamePasswordAuthenticationToken passwordAuthenticationToken = null;
+
         try {
             String header = request.getHeader("Authorization");
-            if (header != null && header.startsWith("Bearer *")){
+            if (header != null && header.startsWith("Bearer ")) {
                 jwt = header.substring(7);
             }
             if (jwt != null) {
                 try {
                     username = jwtCore.getNameFromJwt(jwt);
                 } catch (ExpiredJwtException e) {
-                    //TODO
+                    System.out.println("JWT expired: " + e.getMessage());
                 }
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     userDetails = userDetailsService.loadUserByUsername(username);
-                    passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null);
-
+                    passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    SecurityContextHolder.getContext().setAuthentication(passwordAuthenticationToken);
                 }
             }
         } catch (Exception e) {
-            //TODO
+            System.out.println("Authentication error: " + e.getMessage());
         }
+
         filterChain.doFilter(request, response);
     }
 }
