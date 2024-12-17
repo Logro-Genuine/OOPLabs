@@ -27,22 +27,17 @@ class UserControllerTest {
 
     @Test
     void testUserAccess_WithPrincipal() {
-        // Настраиваем мок-объект Principal
         when(principal.getName()).thenReturn("testUser");
 
-        // Вызываем метод userAccess
         String result = userController.userAccess(principal);
 
-        // Проверяем результат
         assertEquals("testUser", result);
     }
 
     @Test
     void testUserAccess_WithoutPrincipal() {
-        // Вызываем метод userAccess с null
         String result = userController.userAccess(null);
 
-        // Проверяем результат
         assertNull(result);
     }
 }

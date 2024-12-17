@@ -18,15 +18,13 @@ import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SigninRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SignupRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.UserData;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserRole;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-@TestPropertySource(properties = {
-        "ru.ssau.tk.sizar.ooplabs.secret=3n$@8f!2#jKq9^&*zR7wP1mL0xYb6@!Q",
-        "ru.ssau.tk.sizar.ooplabs.lifetime=3600000"
-})
 class SecurityControllerTest {
     @Mock
     private UserRepo userRepo;
@@ -39,6 +37,9 @@ class SecurityControllerTest {
 
     @Mock
     private JWTCore jwtCore;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private SecurityController securityController;
@@ -85,7 +86,7 @@ class SecurityControllerTest {
 
     @Test
     void testSignup_Success() {
-        SignupRequest signupRequest = new SignupRequest("newuser", "password");
+        SignupRequest signupRequest = new SignupRequest("newuser", "password", UserRole.USER);
         when(userRepo.existsByUsername(signupRequest.getUsername())).thenReturn(false);
         when(passwordEncoder.encode(signupRequest.getPassword())).thenReturn("hashed-password");
 
@@ -93,12 +94,12 @@ class SecurityControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Success", response.getBody());
-        verify(userRepo).save(any(UserEntity.class));
+        verify(userService).register(any(SignupRequest.class));
     }
 
     @Test
     void testSignup_UsernameExists() {
-        SignupRequest signupRequest = new SignupRequest("existinguser", "password");
+        SignupRequest signupRequest = new SignupRequest("existinguser", "password", UserRole.ADMIN);
         when(userRepo.existsByUsername(signupRequest.getUsername())).thenReturn(true);
 
         ResponseEntity<?> response = securityController.signup(signupRequest);
@@ -116,7 +117,7 @@ class SecurityControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("User deleted successfully", response.getBody());
-        verify(userRepo).deleteByUsername(username);
+        verify(userService).delete(username);
     }
 
     @Test

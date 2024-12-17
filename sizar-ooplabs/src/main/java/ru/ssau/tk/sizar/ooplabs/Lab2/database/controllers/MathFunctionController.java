@@ -43,7 +43,7 @@ public class MathFunctionController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<MathFunctionDTO> updateFunction(@RequestBody MathFunctionDTO updatedFunction) {
         MathFunctionDTO updated = mathFunctionService.update(updatedFunction);
         return new ResponseEntity<>(updated, HttpStatus.OK);

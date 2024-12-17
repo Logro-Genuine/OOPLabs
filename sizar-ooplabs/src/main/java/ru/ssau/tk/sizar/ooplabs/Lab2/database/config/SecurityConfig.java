@@ -3,6 +3,7 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.database.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,6 +31,10 @@ public class SecurityConfig {
     }
     private UserService userService;
     public SecurityConfig(){}
+    @Autowired
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -37,12 +42,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationM(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
     }
-
+    @Primary
     @Bean
-    public AuthenticationManagerBuilder authenticationManagerBuilder (AuthenticationManagerBuilder managerBuilder) throws Exception{
+    public AuthenticationManagerBuilder authenticationMB(AuthenticationManagerBuilder managerBuilder) throws Exception{
         managerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());
         return managerBuilder;
     }

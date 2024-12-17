@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.PointDTO;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.MathFunctionRepo;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.MathFunctionService;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.PointService;
 
 import java.util.List;
@@ -14,10 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PointController {
     private final PointService pointService;
+    private final MathFunctionRepo mathFunctionRepo;
 
     @PostMapping
     public ResponseEntity<PointDTO> createPoint(@RequestBody PointDTO pointDTO) {
+        if (mathFunctionRepo.findById(pointDTO.getFunc()).isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         PointDTO createdPoint = pointService.create(pointDTO);
+        //если не существует функции по соответствующему Id, все ломается и выводит 500
+        //TODO: выбрасывать исключение если не нашлась функция по Id
         return new ResponseEntity<>(createdPoint, HttpStatus.CREATED);
     }
 

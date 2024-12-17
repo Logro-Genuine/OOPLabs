@@ -48,6 +48,7 @@ public class PointService {
     }
 
     public List<PointDTO> findByFunction(Long id) {
+        System.out.println(id);
         return mathFunctionRepo.findById(id)
                 .map(this::getPointsForFunction)
                 .orElseThrow(EntityNotFoundException::new);

@@ -14,8 +14,8 @@ public class MathFunctionMapper {
         dto.setId(entity.getId());
         dto.setFuncName(entity.getFuncName());
         dto.setPointsCount(entity.getPointsCount());
-        dto.setXFrom(entity.getXFrom() != null ? entity.getXFrom() : 0.0);
-        dto.setXTo(entity.getXTo() != null ? entity.getXTo() : 0.0);
+        dto.setXFrom(entity.getXFrom());
+        dto.setXTo(entity.getXTo());
         return dto;
     }
 

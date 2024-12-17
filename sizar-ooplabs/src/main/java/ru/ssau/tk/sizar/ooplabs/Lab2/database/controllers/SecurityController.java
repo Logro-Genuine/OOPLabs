@@ -1,5 +1,7 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,28 +16,50 @@ import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SigninRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SignupRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
+import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.UserService;
 
 @RestController
 @RequestMapping("api/auth")
+@RequiredArgsConstructor
 public class SecurityController {
-    private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager manager;
-    private final JWTCore jwtCore;
+    private UserRepo userRepo;
+    private AuthenticationManager manager;
+    private JWTCore jwtCore;
+    private UserService userService;
 
-    public SecurityController(UserRepo userRepo, PasswordEncoder passwordEncoder, AuthenticationManager manager, JWTCore jwtCore) {
-        this.userRepo = userRepo;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
-        this.manager = manager;
+    }
+    @Autowired
+    public void setUserRepository(UserRepo userRepo){
+        this.userRepo = userRepo;
+    }
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager){
+        this.manager = authenticationManager;
+    }
+    @Autowired
+    public void setJwtCore(JWTCore jwtCore){
         this.jwtCore = jwtCore;
+    }
+    @Autowired
+    void setUserService(UserService userService){
+        this.userService = userService;
     }
 
     @PostMapping("/signin")
     public ResponseEntity<?> signin (@RequestBody SigninRequest signinRequest){
         Authentication authentication = null;
         try {
-            authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getUsername(),
-                    signinRequest.getPassword()));
+            System.out.println(signinRequest.getUsername()+" "+
+                    signinRequest.getPassword());
+            authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(
+                    signinRequest.getUsername(),
+                    signinRequest.getPassword())
+            );
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -49,11 +73,9 @@ public class SecurityController {
         if (userRepo.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose different name");
         }
-        String hashed = passwordEncoder.encode(signupRequest.getPassword());
-        UserEntity user = new UserEntity();
-        user.setUsername(signupRequest.getUsername());
-        user.setPassword(hashed);
-        userRepo.save(user);
+        signupRequest.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+        UserEntity userEntity = userService.register(signupRequest);
+
         return ResponseEntity.ok("Success");
     }
 
@@ -62,8 +84,7 @@ public class SecurityController {
         if (!userRepo.existsByUsername(username)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-
-        userRepo.deleteByUsername(username);
+        this.userService.delete(username);
         return ResponseEntity.ok("User deleted successfully");
     }
 }

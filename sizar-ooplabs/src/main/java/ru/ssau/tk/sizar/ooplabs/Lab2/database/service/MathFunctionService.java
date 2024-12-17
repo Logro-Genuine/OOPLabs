@@ -49,6 +49,7 @@ public class MathFunctionService {
     public List<MathFunctionDTO> findFunctions(String name) throws EntityNotFoundException {
         List<MathFunctionEntity> mathFunctionEntities;
 
+        System.out.println(name);
         if (name != null && !name.isEmpty()) {
             mathFunctionEntities = mathFunctionRepo.findByFuncName(name);
         } else {
