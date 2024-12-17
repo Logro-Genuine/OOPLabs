@@ -2,8 +2,6 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.database.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.MathFunctionDTO;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.MathFunctionEntity;

@@ -3,7 +3,6 @@ package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.MathFunctionDTO;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.MathFunctionService;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

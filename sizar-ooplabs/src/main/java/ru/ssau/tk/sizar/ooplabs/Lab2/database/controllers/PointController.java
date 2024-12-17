@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.dto.PointDTO;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.MathFunctionRepo;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.MathFunctionService;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.PointService;
 
 import java.util.List;
@@ -20,21 +19,20 @@ public class PointController {
 
     @PostMapping
     public ResponseEntity<PointDTO> createPoint(@RequestBody PointDTO pointDTO) {
-        if (mathFunctionRepo.findById(pointDTO.getFunc()).isEmpty()){
+        try {
+            PointDTO createdPoint = pointService.create(pointDTO);
+            return new ResponseEntity<>(createdPoint, HttpStatus.CREATED);
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        PointDTO createdPoint = pointService.create(pointDTO);
-        //если не существует функции по соответствующему Id, все ломается и выводит 500
-        //TODO: выбрасывать исключение если не нашлась функция по Id
-        return new ResponseEntity<>(createdPoint, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PointDTO> readPoint(@PathVariable Long id) {
-        PointDTO point = pointService.read(id);
-        if (point != null) {
+        try {
+            PointDTO point = pointService.read(id);
             return new ResponseEntity<>(point, HttpStatus.OK);
-        } else {
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

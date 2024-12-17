@@ -11,7 +11,6 @@ import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @Getter

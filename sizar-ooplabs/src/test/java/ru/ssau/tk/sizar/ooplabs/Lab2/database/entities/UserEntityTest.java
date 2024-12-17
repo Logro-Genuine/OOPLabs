@@ -18,11 +18,10 @@ class UserEntityTest {
 
     @BeforeEach
     void setUp() {
-        // Создаем фабрику валидаторов
+        // фабрика валидаторов
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
 
-        // Создаем экземпляр UserEntity с корректными данными
         userEntity = new UserEntity(1L, "testUser", "testPassword", UserRole.USER);
     }
 
@@ -99,24 +98,27 @@ class UserEntityTest {
     @Test
     void testInvalidPassword() {
         userEntity.setPassword(null);
+        // множество всехошибок в данных
         Set<ConstraintViolation<UserEntity>> violations = validator.validate(userEntity);
         assertFalse(violations.isEmpty(), "UserEntity should be invalid due to null password");
 
+        // проверям отсутствие пустых строк
         userEntity.setPassword("");
         violations = validator.validate(userEntity);
         assertFalse(violations.isEmpty(), "UserEntity should be invalid due to blank password");
 
+        // проверка строки минимальной длины (минимум 6)
         userEntity.setPassword("short");
         violations = validator.validate(userEntity);
         assertFalse(violations.isEmpty(), "UserEntity should be invalid due to short password");
 
-        // Test for maximum length password
-        userEntity.setPassword("a".repeat(256)); // 256 characters
+        // проверка строки максимальной длины(максимум 255)
+        userEntity.setPassword("a".repeat(256));
         violations = validator.validate(userEntity);
         assertFalse(violations.isEmpty(), "UserEntity should be invalid due to long password");
 
-        // Valid max length password
-        userEntity.setPassword("a".repeat(255)); // 255 characters
+        // правильная длина строки
+        userEntity.setPassword("a".repeat(255));
         violations = validator.validate(userEntity);
         assertTrue(violations.isEmpty(), "UserEntity should be valid with maximum length password");
     }

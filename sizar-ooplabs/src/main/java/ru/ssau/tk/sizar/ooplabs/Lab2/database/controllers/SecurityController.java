@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.JWTCore;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SigninRequest;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.config.SignupRequest;
-import ru.ssau.tk.sizar.ooplabs.Lab2.database.entities.UserEntity;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.repo.UserRepo;
 import ru.ssau.tk.sizar.ooplabs.Lab2.database.service.UserService;
 
@@ -74,8 +73,7 @@ public class SecurityController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Choose different name");
         }
         signupRequest.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
-        UserEntity userEntity = userService.register(signupRequest);
-
+        userService.register(signupRequest);
         return ResponseEntity.ok("Success");
     }
 

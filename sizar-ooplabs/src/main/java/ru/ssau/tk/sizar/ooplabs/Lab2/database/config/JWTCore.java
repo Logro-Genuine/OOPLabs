@@ -34,8 +34,7 @@ public class JWTCore {
                     .getBody()
                     .getSubject();
         } catch (JwtException | IllegalArgumentException e) {
-            // Обработка исключений, например, логирование или выброс пользовательского исключения
-            return null; // Или выбросить исключение, если это необходимо
+            return null;
         }
     }
 }
