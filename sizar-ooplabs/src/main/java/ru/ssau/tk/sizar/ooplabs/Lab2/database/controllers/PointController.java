@@ -1,5 +1,6 @@
 package ru.ssau.tk.sizar.ooplabs.Lab2.database.controllers;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,14 +33,14 @@ public class PointController {
         try {
             PointDTO point = pointService.read(id);
             return new ResponseEntity<>(point, HttpStatus.OK);
-        } catch (Exception e){
+        } catch (EntityNotFoundException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PointDTO> updatePoint(@PathVariable Long id, @RequestBody PointDTO updatedPoint) {
-        updatedPoint.setId(id); // Убедитесь, что ID обновляемой точки установлен
+        updatedPoint.setId(id);
         PointDTO point = pointService.update(updatedPoint);
         return new ResponseEntity<>(point, HttpStatus.OK);
     }
@@ -49,7 +50,7 @@ public class PointController {
         try {
             pointService.delete(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

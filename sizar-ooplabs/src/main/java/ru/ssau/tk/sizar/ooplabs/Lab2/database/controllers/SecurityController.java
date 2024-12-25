@@ -53,8 +53,6 @@ public class SecurityController {
     public ResponseEntity<?> signin (@RequestBody SigninRequest signinRequest){
         Authentication authentication = null;
         try {
-            System.out.println(signinRequest.getUsername()+" "+
-                    signinRequest.getPassword());
             authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(
                     signinRequest.getUsername(),
                     signinRequest.getPassword())
