@@ -11,12 +11,6 @@ const HeaderComponent = () => {
             <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
                 <ul className='navbar-nav'>
                         <li className='nav-item'>
-                        <NavLink to="/testF" className="nav-link">Тест</NavLink>
-                     </li>
-                        <li className='nav-item'>
-                        <NavLink to="/test2" className="nav-link">Тест2</NavLink>
-                     </li>
-                        <li className='nav-item'>
                         <NavLink to="/" className="nav-link">Главная</NavLink>
                      </li>
                         <li className='nav-item'>

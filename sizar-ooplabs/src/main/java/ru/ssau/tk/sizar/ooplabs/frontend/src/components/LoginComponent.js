@@ -15,9 +15,8 @@ const LoginComponent = () => {
     loginAPICall(username, password)
             .then((response) => {
                 console.log(response.data);
-                // Перенаправление на сайт документации Spring
                 localStorage.setItem('token', response.data);
-                window.location.href = 'http://localhost:3000/account'; // URL документации Spring
+                window.location.href = 'http://localhost:3000/account';
             })
             .catch((error) => {
                 console.error('Ошибка входа:', error);

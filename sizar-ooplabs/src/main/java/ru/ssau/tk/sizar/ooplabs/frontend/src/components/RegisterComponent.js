@@ -23,7 +23,6 @@ const RegisterComponent = () => {
         registerAPICall(username, password, role)
             .then((response) => {
                 console.log(response.data);
-                // Логика для перенаправления пользователя после успешной регистрации
             })
             .catch((error) => {
                 console.error('Ошибка регистрации:', error.response ? error.response.data : error.message);
@@ -52,9 +51,9 @@ const RegisterComponent = () => {
                                     <div className='col-md-9'>
                                         <input
                                             type='text'
-                                            name='username'
+                                            name='Имя пользователя'
                                             className='form-control'
-                                            placeholder='Enter username'
+                                            placeholder='Введите имя пользователя'
                                             value={username}
                                             onChange={(e) => setUsername(e.target.value)}
                                         />
@@ -66,9 +65,9 @@ const RegisterComponent = () => {
                                     <div className='col-md-9'>
                                         <input
                                             type='password'
-                                            name='password'
+                                            name='Пароль'
                                             className='form-control'
-                                            placeholder='Enter password'
+                                            placeholder='Введите пароль'
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
@@ -80,9 +79,9 @@ const RegisterComponent = () => {
                                     <div className='col-md-9'>
                                         <input
                                             type='password'
-                                            name='confirmPassword'
+                                            name='Пароль'
                                             className='form-control'
-                                            placeholder='Confirm password'
+                                            placeholder='Введите пароль ещё раз'
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
@@ -93,7 +92,7 @@ const RegisterComponent = () => {
 
                                 <div className='form-group mb-3'>
                                     <button className='btn btn-primary' type='submit' disabled={loading}>
-                                        {loading ? 'Loading...' : 'Register'}
+                                        {loading ? 'Загрузка...' : 'Зарегистрироваться'}
                                     </button>
                                 </div>
                             </form>
