@@ -10,15 +10,28 @@ const HeaderComponent = () => {
         <header>
             <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
                 <ul className='navbar-nav'>
-                        <li className='nav-item'>
-                        <NavLink to="/" className="nav-link">Главная</NavLink>
-                     </li>
-                        <li className='nav-item'>
-                        <NavLink to="/register" className="nav-link">Регистрация</NavLink>
-                    </li>
-                        <li className='nav-item'>
-                        <NavLink to="/login" className="nav-link">Войти</NavLink>
-                    </li>
+                    <Nav className="me-auto">
+                        {isAuthenticated ? (
+                                <Nav.Link as={Link} to="/">Главная</Nav.Link>
+                                ) : (
+                            <>
+                                <Nav.Link as={Link} to="/account">Аккаунт</Nav.Link>
+                                <Nav.Link as={Link} to="/create-function">Создать функцию</Nav.Link>
+                                <Nav.Link as={Link} to="/create-custom-function">Создать свою функцию</Nav.Link>
+                                <Nav.Link as={Link} to="/functions-paged">К списку функций</Nav.Link>
+                            </>
+                        )}
+                    </Nav>
+                    <Nav>
+                        {isAuthenticated ? (
+                            <Nav.Link onClick={handleLogout}>Выйти</Nav.Link>
+                        ) : (
+                            <>
+                                <Nav.Link as={Link} to="/login">Войти</Nav.Link>
+                                <Nav.Link as={Link} to="/register">Зарегистрироваться</Nav.Link>
+                            </>
+                        )}
+                    </Nav>
                 </ul>
             </nav>
         </header>

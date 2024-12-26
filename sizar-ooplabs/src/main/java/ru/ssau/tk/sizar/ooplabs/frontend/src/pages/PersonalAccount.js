@@ -12,8 +12,7 @@ const PersonalAccount = () => {
                         <h1 className="display-4">Добро пожаловать!</h1>
                         <p className="lead">
                             Теперь вы можете воспользоваться всеми функциями нашего приложения.
-                            Здесь вы можете создавать функции, просматривать их графики,
-                            выполнять операции над ними и многое другое.
+                            Здесь вы можете создавать функции и просматривать их графики.
                         </p>
                         <hr className="my-4" />
                         <p>Воспользуйтесь возможностями приложения уже сейчас!</p>
@@ -45,8 +44,8 @@ const PersonalAccount = () => {
                         <Card.Body>
                             <Card.Title>Список функций</Card.Title>
                             <Card.Text>
-                                Просматривайте уже созданные функции, фильтруйте их по названию,
-                                удаляйте ненужные и открывайте для просмотра графиков.
+                                Просматривайте уже созданные функции, удаляйте ненужные
+                                и открывайте для просмотра графиков.
                             </Card.Text>
                             <Button as={Link} to="/functions" variant="primary">
                                 Посмотреть список
@@ -57,14 +56,10 @@ const PersonalAccount = () => {
                 <Col md={4}>
                     <Card className="mb-4 shadow-sm">
                         <Card.Body>
-                            <Card.Title>Операции над функциями</Card.Title>
-                            <Card.Text>
-                                Выполняйте арифметические операции (сложение, вычитание, умножение, деление)
-                                над двумя существующими функциями и сохраняйте результат.
-                            </Card.Text>
-                            <Button as={Link} to="/operate-functions" variant="warning">
-                                Перейти к операциям
-                            </Button>
+                            <Card.Title>Удалить аккаунт</Card.Title>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Удалить
+                            </button>
                         </Card.Body>
                     </Card>
                 </Col>
