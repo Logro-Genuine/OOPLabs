@@ -37,7 +37,8 @@ function App() {
         <div className= "container">
           <Routes>
               <Route path = "/" element = { <Home/> }></Route>
-              <Route path = "/account" element = { <PersonalAccount/> }></Route>
+              <Route path = "/account" element = { <isAuthenticated ? <PersonalAccount/> : <LoginComponent onLogin={handleLogin} />
+              } />
               <Route path='/login' element = { <LoginComponent onLogin={handleLogin} /> }></Route>
               <Route path = "/register" element = { <RegisterComponent /> }></Route>
               <Route path="/create-function" element={
