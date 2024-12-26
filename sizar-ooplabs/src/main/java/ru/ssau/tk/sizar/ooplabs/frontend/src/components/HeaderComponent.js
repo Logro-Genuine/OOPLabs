@@ -13,22 +13,15 @@ const HeaderComponent = () => {
                     <Nav className="me-auto">
                         {isAuthenticated ? (
                                 <Nav.Link as={Link} to="/">Главная</Nav.Link>
+                                <Nav.Link as={Link} to="/login">Войти</Nav.Link>
+                                <Nav.Link as={Link} to="/register">Зарегистрироваться</Nav.Link>
                                 ) : (
                             <>
                                 <Nav.Link as={Link} to="/account">Аккаунт</Nav.Link>
                                 <Nav.Link as={Link} to="/create-function">Создать функцию</Nav.Link>
                                 <Nav.Link as={Link} to="/create-custom-function">Создать свою функцию</Nav.Link>
                                 <Nav.Link as={Link} to="/functions-paged">К списку функций</Nav.Link>
-                            </>
-                        )}
-                    </Nav>
-                    <Nav>
-                        {isAuthenticated ? (
-                            <Nav.Link onClick={handleLogout}>Выйти</Nav.Link>
-                        ) : (
-                            <>
-                                <Nav.Link as={Link} to="/login">Войти</Nav.Link>
-                                <Nav.Link as={Link} to="/register">Зарегистрироваться</Nav.Link>
+                                <Nav.Link onClick={handleLogout}>Выйти</Nav.Link>
                             </>
                         )}
                     </Nav>
