@@ -4,19 +4,6 @@ import { Link } from 'react-router-dom';
 import api from 'C:/Users/bogom/demo/demo/frontend/src/api';
 
 const PersonalAccount = () => {
-    const [showModal, setShowModal] = useState(false);
-            const handleOpenModal = () => setShowModal(true);
-            const handleCloseModal = () => setShowModal(false);
-            const handleDelete = async () => {
-                try {
-                    const response = await api.delete('/api/delete/{username}');
-                       console.log('Удалено:', response.data);
-                } catch (error) {
-                        console.error('Ошибка при удалении:', error);
-                }
-
-            }
-
 
   return (
         <Container className="mt-5">
@@ -83,34 +70,7 @@ const PersonalAccount = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={4}>
-                    <Card className="mb-4 shadow-sm">
-                        <Card.Body>
-                            <Card.Title>Удалить аккаунт</Card.Title>
-                            <button className="btn btn-danger" onClick={handleOpenModal}>
-                                  Удалить
-                            </button>
-                        </Card.Body>
-                    </Card>
-                </Col>
             </Row>
-            <div className={`modal fade ${showModal ? 'show' : ''}`} style={{ display: showModal ? 'block' : 'none' }} tabIndex="-1" aria-labelledby="DeleteModalLabel" aria-hidden={!showModal}>
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title" id="DeleteModalLabel">Подтверждение удаления</h5>
-                                        <button type="button" className="btn-close" onClick={handleCloseModal} aria-label="Close"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                        Вы уверены, что хотите удалить этот аккаунт?
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>Закрыть</button>
-                                        <button type="button" className="btn btn-danger" onClick={handleDelete}>Удалить</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
         </Container>
     );
 };
