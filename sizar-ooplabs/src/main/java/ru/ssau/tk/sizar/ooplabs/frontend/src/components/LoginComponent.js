@@ -76,6 +76,10 @@ const LoginComponent = () => {
                                 </div>
                             </form>
                         </div>
+                        <div class="text-center text-lg-start mt-2 pt-2">
+                             <p class="small fw-bold mt-1 pt-1 mb-0">Нет аккаунта? <a href="/register"
+                             class="link-primary">Зарегистрироваться</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
