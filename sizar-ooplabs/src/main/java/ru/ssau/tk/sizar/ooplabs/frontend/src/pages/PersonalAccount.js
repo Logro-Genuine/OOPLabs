@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import api from 'C:/Users/bogom/demo/demo/frontend/src/api';
+import api from '../api';
 
 const PersonalAccount = () => {
 

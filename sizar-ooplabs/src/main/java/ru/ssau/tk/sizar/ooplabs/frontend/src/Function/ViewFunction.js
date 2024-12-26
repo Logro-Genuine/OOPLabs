@@ -16,16 +16,23 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const ViewFunction = () => {
     const { id } = useParams();
-    const navigate = useNavigate(); // Используем useNavigate вместо useHistory
+    const navigate = useNavigate();
     const [functionData, setFunctionData] = useState(null);
     const [points, setPoints] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newFuncName, setNewFuncName] = useState('');
+    const [pointsCount, setPointsCount] = useState(0);
+    const [xfrom, setXFrom] = useState(0);
+    const [xto, setXTo] = useState(0);
 
     useEffect(() => {
         const fetchFunction = async () => {
             const response = await api.get(`/functions/${id}`);
             setFunctionData(response.data);
+            setNewFuncName(response.data.funcName);
+            setPointsCount(response.data.pointsCount);
+            setXFrom(response.data.xfrom);
+            setXTo(response.data.xto);
         };
 
         const fetchPoints = async () => {
@@ -40,13 +47,18 @@ const ViewFunction = () => {
 
     const handleDelete = async () => {
         await api.delete(`/functions/${id}`);
-        navigate('/functions'); // Перенаправляем после удаления
+        navigate('/functions');
     };
 
     const handleUpdate = async () => {
-        await api.put(`/functions/${id}`, { funcName: newFuncName });
+        await api.put(`/functions`, {
+            id: `${id}`,
+            funcName: newFuncName,
+            pointsCount: pointsCount,
+            xfrom: xfrom,
+            xto: xto
+        });
         setShowModal(false);
-        // Опционально, можно заново получить данные функции
         const response = await api.get(`/functions/${id}`);
         setFunctionData(response.data);
     };
@@ -124,6 +136,33 @@ const ViewFunction = () => {
                                 onChange={(e) => setNewFuncName(e.target.value)}
                             />
                         </Form.Group>
+                        <Form.Group controlId="formPointsCount">
+                            <Form.Label>Points Count</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter points count"
+                                value={pointsCount}
+                                onChange={(e) => setPointsCount(Number(e.target.value))}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formXFrom">
+                            <Form.Label>X From</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter x from"
+                                value={xfrom}
+                                onChange={(e) => setXFrom(e.target.value)} // Keep as string for empty input
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formXTo">
+                            <Form.Label>X To</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter x to"
+                                value={xto}
+                                onChange={(e) => setXTo(e.target.value)} // Keep as string for empty input
+                            />
+                        </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -139,4 +178,4 @@ const ViewFunction = () => {
     );
 };
 
-export default ViewFunction; // Экспорт компонента
+export default ViewFunction; // Export the component
