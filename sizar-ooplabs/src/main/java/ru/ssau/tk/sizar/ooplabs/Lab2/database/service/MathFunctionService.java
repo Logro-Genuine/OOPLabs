@@ -51,7 +51,7 @@ public class MathFunctionService {
         if (name != null && !name.isEmpty()) {
             mathFunctionEntities = mathFunctionRepo.findByFuncName(name);
         } else {
-            throw new EntityNotFoundException();
+            mathFunctionEntities = mathFunctionRepo.findAll();
         }
 
         return mathFunctionEntities.stream()

@@ -15,6 +15,7 @@ const LoginComponent = () => {
     loginAPICall(username, password)
             .then((response) => {
                 console.log(response.data);
+                localStorage.setItem('username',username);
                 localStorage.setItem('token', response.data);
                 window.location.href = 'http://localhost:3000/account';
             })

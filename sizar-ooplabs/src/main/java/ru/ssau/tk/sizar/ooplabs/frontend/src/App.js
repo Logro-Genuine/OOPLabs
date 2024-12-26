@@ -11,6 +11,8 @@ import CreateFunction from './Function/CreateFunction'
 import FunctionForm from './Function/FunctionForm'
 import FunctionTable from './Function/FunctionTable'
 import ViewFunction from './Function/ViewFunction'
+import FunctionList from './Function/FunctionList';
+
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,7 +39,7 @@ function App() {
         <div className= "container">
           <Routes>
               <Route path = "/" element = { <Home/> }></Route>
-              <Route path = "/account" element = { <isAuthenticated ? <PersonalAccount/> : <LoginComponent onLogin={handleLogin} />
+              <Route path = "/account" element = {isAuthenticated ? <PersonalAccount/> : <LoginComponent onLogin={handleLogin} />
               } />
               <Route path='/login' element = { <LoginComponent onLogin={handleLogin} /> }></Route>
               <Route path = "/register" element = { <RegisterComponent /> }></Route>
@@ -50,6 +52,9 @@ function App() {
               <Route path="/create-custom-function" element={
                   isAuthenticated ? <CreateCustomFunction /> : <LoginComponent onLogin={handleLogin} />
               } />
+              <Route path="/functions" element={
+                                isAuthenticated ? <FunctionList /> : <LoginComponent onLogin={handleLogin} />
+                            } />
             </Routes>
         </div>
         </BrowserRouter>
